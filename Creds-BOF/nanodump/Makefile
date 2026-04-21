@@ -17,6 +17,12 @@ nanodump:
 	@$(CC_x86) -c source/entry.c -o dist/$(BOFNAME).x86.o $(OPTIONS) -DNANO -DBOF
 	@$(STRIP_x86) --strip-unneeded dist/$(BOFNAME).x86.o && echo '[+] nanodump x86' || echo '[!] nanodump x86'
 
+	@$(CC_x64) source/spoof_callstack.c source/hw_breakpoint.c source/shtinkering.c source/dinvoke.c source/utils.c source/handle.c source/impersonate.c source/modules.c source/syscalls.c source/token_priv.c source/malseclogon.c source/nanodump.c source/werfault.c source/entry.c -o dist/$(BOFNAME).x64.exe $(OPTIONS) -DNANO -DEXE
+	@$(STRIP_x64) --strip-all dist/$(BOFNAME).x64.exe && echo '[+] nanodump exe x64' || echo '[!] nanodump exe x64'
+
+	@$(CC_x86) source/spoof_callstack.c source/hw_breakpoint.c source/shtinkering.c source/dinvoke.c source/utils.c source/handle.c source/impersonate.c source/modules.c source/syscalls.c source/token_priv.c source/malseclogon.c source/nanodump.c source/werfault.c source/entry.c -o dist/$(BOFNAME).x86.exe $(OPTIONS) -DNANO -DEXE
+	@$(STRIP_x86) --strip-all dist/$(BOFNAME).x86.exe && echo '[+] nanodump exe x86' || echo '[!] nanodump exe x86'
+
 	@$(GCC) source/bin2c.c -o dist/bin2c -Os
 
 	@$(CC_x64) source/utils.c source/handle.c source/modules.c source/syscalls.c source/token_priv.c source/nanodump.c source/dinvoke.c source/pipe.c source/entry.c -o dist/$(BOFNAME)_ssp.x64.dll $(OPTIONS) $(SSP_OPTIONS) -DNANO -DSSP -DDDL -shared
