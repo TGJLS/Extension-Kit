@@ -14,5 +14,3 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY . /src
 
 RUN make -C /src all
-
-WORKDIR /src
